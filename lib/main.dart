@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_with_bloc/bloc/RandomBloc.dart';
+import 'package:flutter_with_bloc/bloc/random_bloc.dart';
 import 'package:flutter_with_bloc/bloc/bloc.dart';
 import 'package:flutter_with_bloc/bloc/event/counter_change_event.dart';
 import 'package:flutter_with_bloc/bloc/state/counter_change_state.dart';
@@ -45,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   void showTheSnack(int count) {
     if (count % 3 == 0) {
-      ScaffoldMessenger.of(context as BuildContext).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Marsbar'), duration: Durations.extralong3));
     }
   }
