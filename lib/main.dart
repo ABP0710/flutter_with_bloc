@@ -1,11 +1,10 @@
-import 'dart:js';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_with_bloc/bloc/RandomBloc.dart';
 import 'package:flutter_with_bloc/bloc/bloc.dart';
 import 'package:flutter_with_bloc/bloc/event/counter_change_event.dart';
 import 'package:flutter_with_bloc/bloc/state/counter_change_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_with_bloc/bloc/state/random_counter_change_state.dart';
 import 'package:flutter_with_bloc/bloc/event/random_counter_change_event.dart';
 
@@ -44,7 +43,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _showTheSnack(int count) {
+  void showTheSnack(int count) {
     if (count % 3 == 0) {
       ScaffoldMessenger.of(context as BuildContext).showSnackBar(const SnackBar(
           content: Text('Marsbar'), duration: Durations.extralong3));
@@ -53,12 +52,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final CounterChangeBloc counterBloc = context.read<CounterChangeBloc>();
-    //       RandomCounterChangeBloc randomCounterBloc = context.read<RandomCounterChangeBloc>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        leading: Builder(
+          builder: (BuildContext context){
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer(); // Open the drawer
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        )
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.black,
+              ),
+              child: Text(
+                'Drawer Header',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text('Counter'),
+              //tilføj onTap:(){ der router til den ønskede side } 
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text('Random Counter'),
+              //tilføj onTap:(){ der router til den ønskede side } 
+            ),
+          ],
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -70,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
 
 Widget _counterWidget(BuildContext context) {
   return Column(children: <Widget>[
@@ -105,6 +143,7 @@ Widget _counterWidget(BuildContext context) {
   ]);
 }
 
+
 Widget _randomCounterWidget(BuildContext context) {
   return Column(
     children: <Widget>[
@@ -124,7 +163,7 @@ Widget _randomCounterWidget(BuildContext context) {
                 .add(RandomCounterBiggerThanEvent());
           },
           tooltip: 'Increment',
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.add_circle),
         ),
         FloatingActionButton(
           onPressed: () {
@@ -133,9 +172,10 @@ Widget _randomCounterWidget(BuildContext context) {
                 .add(RandomCounterSmallerThanEvent());
           },
           tooltip: 'Decrement',
-          child: const Icon(Icons.remove),
+          child: const Icon(Icons.remove_circle),
         )
       ]),
     ],
   );
 }
+
